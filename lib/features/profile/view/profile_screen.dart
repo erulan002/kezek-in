@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kezek_in/core/const/images.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -6,8 +7,62 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('PROFILE')),
-      body: Center(child: Text('Profile')),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 90),
+            Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  height: 150,
+                  child: ClipOval(
+                    child: Image.asset(
+                      AppImages.malePortraitProfile,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 2,
+                  bottom: 2,
+                  child: IconButton(
+                    color: Colors.grey.withOpacity(0.1),
+                    onPressed: () {},
+                    icon: Icon(Icons.camera_alt_outlined),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 500,
+              child: ListView.separated(
+                itemCount: 5,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 20,
+                  ),
+                  child: ListTile(
+                    onTap: () {},
+                    title: Text('data'),
+                    leading: Icon(Icons.person, color: Colors.teal),
+                    trailing: Icon(Icons.arrow_forward_ios, color: Colors.teal),
+                    tileColor: Colors.grey.withOpacity(0.1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                  ),
+                ),
+                separatorBuilder: (BuildContext context, int index) =>
+                    SizedBox(),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
