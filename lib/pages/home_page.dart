@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
-  List<Widget> _screens = [HomeScreen(), SearchScreen(), ProfileScreen()];
+  List<Widget> _screens = [MainScreen(), SearchScreen(), ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {

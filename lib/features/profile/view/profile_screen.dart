@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kezek_in/core/const/images.dart';
+import 'package:kezek_in/navigation/route_names.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -46,7 +48,22 @@ class ProfileScreen extends StatelessWidget {
                     horizontal: 20,
                   ),
                   child: ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      switch (index) {
+                        case 0:
+                          context.go(RouteNames.logIn);
+                          break;
+                        case 1:
+                          break;
+                        case 2:
+                          break;
+                        case 3:
+                          break;
+                        case 4:
+                          break;
+                      }
+                    },
+
                     title: Text('data'),
                     leading: Icon(Icons.person, color: Colors.teal),
                     trailing: Icon(Icons.arrow_forward_ios, color: Colors.teal),
