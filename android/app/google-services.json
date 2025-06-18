@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "919531585783",
+    "project_id": "kezek-in",
+    "storage_bucket": "kezek-in.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919531585783:android:023de68cd566aecc1413f2",
+        "android_client_info": {
+          "package_name": "com.example.kezek_in"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS2FXTz-qpSwQPYJu24PSkYueglIKTeEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919531585783:android:ffa563a2acb055591413f2",
+        "android_client_info": {
+          "package_name": "kz.otisdevteam.otis_security"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS2FXTz-qpSwQPYJu24PSkYueglIKTeEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
