@@ -51,7 +51,7 @@ class ProfileScreen extends StatelessWidget {
                     onTap: () {
                       switch (index) {
                         case 0:
-                          context.go(RouteNames.logIn);
+                          context.go(RouteNames.singIn);
                           break;
                         case 1:
                           break;
