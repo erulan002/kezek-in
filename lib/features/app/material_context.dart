@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kezek_in/features/profile/view/login/log_in_screen.dart';
+import 'package:kezek_in/features/profile/view/sign/sign_in_screen.dart';
+import 'package:kezek_in/features/profile/view/sign/sign_up_screen.dart';
 
+import '../../core/theme/theme.dart';
 import '../../navigation/route_names.dart';
 import '../../pages/home_page.dart';
 import '../home/view/home_screen.dart';
@@ -31,9 +33,14 @@ final _router = GoRouter(
       builder: (context, state) => ProfileScreen(),
     ),
     GoRoute(
-      path: RouteNames.logIn,
-      name: RouteNames.logIn,
-      builder: (context, state) => LogInScreen(),
+      path: RouteNames.singUp,
+      name: RouteNames.singUp,
+      builder: (context, state) => SignUpScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.singIn,
+      name: RouteNames.singIn,
+      builder: (context, state) => SignInScreen(),
     ),
   ],
 );
@@ -45,19 +52,7 @@ class MaterialContext extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router,
-      theme: ThemeData(
-        textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.teal),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(backgroundColor: Colors.teal),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(),
-          floatingLabelStyle: TextStyle(color: Colors.teal),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.teal),
-          ),
-        ),
-      ),
+      theme: MainTheme.mainTheme,
     );
   }
 }
