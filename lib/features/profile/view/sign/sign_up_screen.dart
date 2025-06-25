@@ -24,12 +24,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> createUserWithEmailAndPassword() async {
-    final userCredential = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
-    print(userCredential);
+    try {
+      final userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          );
+      print(userCredential);
+    } on FirebaseAuthException catch (error) {
+      print(error.message);
+    }
   }
 
   @override
