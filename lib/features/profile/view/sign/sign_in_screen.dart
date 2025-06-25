@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +20,19 @@ class _SignInScreenState extends State<SignInScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> signInWithEmailAndPassword() async {
+    try {
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          );
+      print(userCredential);
+    } on FirebaseAuthException catch (error) {
+      print(error.message);
+    }
   }
 
   @override
@@ -66,7 +80,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 width: double.infinity,
                 height: 49,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => signInWithEmailAndPassword(),
 
                   child: Text(
                     'Sign In',
