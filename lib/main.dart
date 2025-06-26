@@ -4,7 +4,7 @@ import 'package:kezek_in/firebase_options.dart';
 
 import 'features/app/my_app.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const App());
