@@ -80,7 +80,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 width: double.infinity,
                 height: 49,
                 child: ElevatedButton(
-                  onPressed: () => signInWithEmailAndPassword(),
+                  onPressed: () async => await signInWithEmailAndPassword(),
 
                   child: Text(
                     'Sign In',

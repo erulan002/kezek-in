@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kezek_in/features/profile/view/sign/sign_in_screen.dart';
@@ -10,7 +13,35 @@ import '../home/view/home_screen.dart';
 import '../profile/view/profile_screen.dart';
 import '../search/view/search_screen.dart';
 
-final _router = GoRouter(
+class AuthNotifier extends ChangeNotifier {
+  late final StreamSubscription<User?> _subscription;
+
+  AuthNotifier() {
+    _subscription = FirebaseAuth.instance.authStateChanges().listen((_) {
+      notifyListeners();
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
+
+GoRouter get router => GoRouter(
+  refreshListenable: AuthNotifier(),
+  redirect: (context, state) {
+    final user = FirebaseAuth.instance.currentUser;
+    final loggingIn = state.matchedLocation == RouteNames.singUp;
+
+    if (user == null && !loggingIn) {
+      return RouteNames.singUp;
+    } else if (user != null && loggingIn) {
+      return RouteNames.home;
+    }
+    return null;
+  },
   routes: [
     GoRoute(
       path: RouteNames.home,
@@ -50,9 +81,6 @@ class MaterialContext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-      theme: MainTheme.mainTheme,
-    );
+    return MaterialApp.router(routerConfig: router, theme: MainTheme.mainTheme);
   }
 }
