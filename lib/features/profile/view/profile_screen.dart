@@ -24,6 +24,11 @@ class ProfileScreen extends StatelessWidget {
       icon: Icons.settings,
     ),
     ProfileItem(
+      title: 'Settings',
+      onTap: (context) => context.push(RouteNames.singIn),
+      icon: Icons.settings,
+    ),
+    ProfileItem(
       title: 'Log Out',
       onTap: (context) => context.push(RouteNames.singIn),
       icon: Icons.exit_to_app,
