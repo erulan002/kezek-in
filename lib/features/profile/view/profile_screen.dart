@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kezek_in/core/const/images.dart';
@@ -22,11 +24,6 @@ class ProfileScreen extends StatelessWidget {
       title: 'Settings',
       onTap: (context) => context.push(RouteNames.singIn),
       icon: Icons.settings,
-    ),
-    ProfileItem(
-      title: 'Log Out',
-      onTap: (context) => context.push(RouteNames.singIn),
-      icon: Icons.exit_to_app,
     ),
   ];
 
@@ -91,6 +88,20 @@ class ProfileScreen extends StatelessWidget {
                 separatorBuilder: (BuildContext context, int index) =>
                     SizedBox(),
               ),
+            ),
+            SizedBox(
+              width: 130,
+              child: ElevatedButton(onPressed: () {
+
+                    FirebaseAuth.instance.signOut();
+                    context.go(RouteNames.singIn);
+              }, child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.exit_to_app),
+                  SizedBox(width: 5),
+                  Text('Log Out'),
+                ],
+              ),),
             ),
           ],
         ),
