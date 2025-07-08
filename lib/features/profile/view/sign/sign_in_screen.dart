@@ -80,7 +80,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 width: double.infinity,
                 height: 49,
                 child: ElevatedButton(
-                  onPressed: () async => await signInWithEmailAndPassword(),
+                  onPressed: () async {await signInWithEmailAndPassword();
+                  context.go(RouteNames.main);},
 
                   child: Text(
                     'Sign In',

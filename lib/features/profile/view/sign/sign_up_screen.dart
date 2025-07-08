@@ -81,7 +81,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: double.infinity,
                 height: 49,
                 child: ElevatedButton(
-                  onPressed: () async => await createUserWithEmailAndPassword(),
+                  onPressed: () async {
+
+                    await createUserWithEmailAndPassword();
+
+                    context.go(RouteNames.main);
+                  },
                   child: Text(
                     'Sign Up',
                     style: TextStyle(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/theme.dart';
+import '../../navigation/auth_guard_screen.dart';
 import '../../navigation/route_names.dart';
 import '../../pages/home_page.dart';
 import '../home/view/home_screen.dart';
@@ -12,19 +13,9 @@ import '../profile/view/sign/sign_in_screen.dart';
 import '../profile/view/sign/sign_up_screen.dart';
 import '../search/view/search_screen.dart';
 
-GoRouter createRouter() {
+GoRouter createRouter({required String initialLocation}) {
   return GoRouter(
-    initialLocation: '/main',
-    redirect: (context, state) {
-      final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-      final goingToAuth =
-          state.uri.toString() == RouteNames.singUp ||
-          state.uri.toString() == RouteNames.singIn;
-
-      if (!isLoggedIn && !goingToAuth) return RouteNames.singUp;
-      if (isLoggedIn && goingToAuth) return RouteNames.main;
-      return null;
-    },
+    initialLocation: initialLocation,
     routes: [
       ShellRoute(
         builder: (context, state, child) {
@@ -50,15 +41,18 @@ GoRouter createRouter() {
       ),
       GoRoute(
         path: RouteNames.singIn,
-        builder: (context, state) => SignInScreen(),
+        name: RouteNames.singIn,
+        builder: (context, state) => const AuthGuard(child: SignInScreen()),
       ),
       GoRoute(
         path: RouteNames.singUp,
+        name: RouteNames.singUp,
         builder: (context, state) => SignUpScreen(),
       ),
     ],
   );
 }
+
 
 class MaterialContext extends StatefulWidget {
   const MaterialContext({super.key});
@@ -66,14 +60,12 @@ class MaterialContext extends StatefulWidget {
   @override
   State<MaterialContext> createState() => _MaterialContextState();
 }
-
 class _MaterialContextState extends State<MaterialContext> {
   late final GoRouter _router;
 
   @override
   void initState() {
     super.initState();
-    _router = createRouter(); // ✅ создаем один раз
   }
 
   @override
@@ -87,11 +79,18 @@ class _MaterialContextState extends State<MaterialContext> {
           );
         }
 
+        final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+        final initialLocation = isLoggedIn ? RouteNames.main : RouteNames.singUp;
+
+        final router = createRouter(initialLocation: initialLocation);
+
         return MaterialApp.router(
-          routerConfig: _router, // ✅ используем кэшированный экземпляр
+          routerConfig: router,
           theme: MainTheme.mainTheme,
         );
       },
     );
   }
+
+
 }
