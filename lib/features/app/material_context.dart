@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/theme.dart';
 import '../../navigation/auth_guard_screen.dart';
 import '../../navigation/route_names.dart';
-import '../../pages/home_page.dart';
+import '../../pages/nav_bar.dart';
 import '../home/view/home_screen.dart';
 import '../profile/view/profile_screen.dart';
 import '../profile/view/sign/sign_in_screen.dart';
@@ -47,12 +47,11 @@ GoRouter createRouter({required String initialLocation}) {
       GoRoute(
         path: RouteNames.singUp,
         name: RouteNames.singUp,
-        builder: (context, state) => SignUpScreen(),
+        builder: (context, state) => AuthGuard(child: SignUpScreen()),
       ),
     ],
   );
 }
-
 
 class MaterialContext extends StatefulWidget {
   const MaterialContext({super.key});
@@ -60,37 +59,38 @@ class MaterialContext extends StatefulWidget {
   @override
   State<MaterialContext> createState() => _MaterialContextState();
 }
+
 class _MaterialContextState extends State<MaterialContext> {
-  late final GoRouter _router;
+  GoRouter? _router;
 
   @override
   void initState() {
     super.initState();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    await Firebase.initializeApp();
+
+    final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+    final initialLocation = isLoggedIn ? RouteNames.main : RouteNames.singUp;
+
+    setState(() {
+      _router = createRouter(initialLocation: initialLocation);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Firebase.initializeApp(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return const MaterialApp(
-            home: Scaffold(body: Center(child: CircularProgressIndicator())),
-          );
-        }
+    if (_router == null) {
+      return const MaterialApp(
+        home: Scaffold(body: Center(child: CircularProgressIndicator())),
+      );
+    }
 
-        final isLoggedIn = FirebaseAuth.instance.currentUser != null;
-        final initialLocation = isLoggedIn ? RouteNames.main : RouteNames.singUp;
-
-        final router = createRouter(initialLocation: initialLocation);
-
-        return MaterialApp.router(
-          routerConfig: router,
-          theme: MainTheme.mainTheme,
-        );
-      },
+    return MaterialApp.router(
+      routerConfig: _router!,
+      theme: MainTheme.mainTheme,
     );
   }
-
-
 }
